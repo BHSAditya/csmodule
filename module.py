@@ -26,6 +26,7 @@ def video_rescale(location):
 
 def rescale(frame, scale=0.75):
 	height = int(frame.shape[0]*scale)
+	
 	width = int(frame.shape[1]*scale)
 
 	dimensions = (width, height)
@@ -44,4 +45,8 @@ def text(image, text, org, font, fontScale, color, thickness):
 	cv2.imshow('Text', image)
 
 
+
+def line(image, start_point, end_point, color, thickness):
+	cv2.line(image, start_point, end_point, color, thickness)
+	cv2.imshow('Line', image)
 
