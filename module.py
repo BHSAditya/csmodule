@@ -1,5 +1,6 @@
 import cv2 
 import numpy as np
+import matplotlib.pyplot as plt
 
 blank = np.zeros((500,500,3), dtype='uint8')
 center = (blank.shape[1]//2, blank.shape[0]//2)
