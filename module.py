@@ -4,6 +4,7 @@ import numpy as np
 blank = np.zeros((500,500,3), dtype='uint8')
 center = (blank.shape[1]//2, blank.shape[0]//2)
 
+
 def display_video(location):
 	video = cv2.VideoCapture(location)
 	while True:
@@ -153,7 +154,7 @@ def convolution2D(img):
 	cv2.waitKey(0)
 	cv2.destroyAllWindows()
 
-#Averaging involves replacing each pixel in an image with the average value of its neighboring pixels
+#Averaging involves replacing the centre pixel in the kernel window with the average value of its neighboring pixels.Produces most blur 
 def averaging(img):
 	im = cv2.imread(img)
 	averageBlur = cv2.blur(im, (5,5))
@@ -162,7 +163,7 @@ def averaging(img):
 	cv2.waitKey(0)
 	cv2.destroyAllWindows()
 
-#Median blur is an image processing technique that replaces each pixel's value with the median value of its neighboring pixels
+#Median blur is an image processing technique that replaces the centre pixel's value with the median value of its neighboring pixels 
 def medianBlur(img):
 	im = cv2.imread(img)
 	median = cv2.medianBlur(im,9)
@@ -174,6 +175,7 @@ def medianBlur(img):
 #this function concerns more about the edges and smoothens the image by preserving the edges
 def bilateralBlur(img):
 	im = cv2.imread(img)
+	#increasing sigma space and sigma colors will increase the range  of pixels and more colors in the surrounding pixels taken into consideration while taking average for the cetnre pixels respectively
 	bilateral = cv2.bilateralFilter(im ,9, 75, 75)
 	cv2.imshow('Original Image', im)
 	cv2.imshow('Bilateral Blur', bilateral)
@@ -205,11 +207,12 @@ def contour_detection(im):
 
 
 
-def BGR_colorSpace_split(im):
+#shows the regions and intensities of  the color is in an image 
+def gray_colorSpace_split(im):
      img = cv2.imread(im)
      B,G,R = cv2.split(img)
      cv2.imshow('Original', img)
-     
+     #if the grayscale image is darker it means that there is less of that color in that specific region and  if it is light there is more of that color in that specific region
      cv2.imshow('Blue', B)
      
      cv2.imshow('Green', G)
@@ -219,7 +222,23 @@ def BGR_colorSpace_split(im):
      cv2.destroyAllWindows()
 
 
+def BGR_split(im):
+	
+	img = cv2.imread(im)
+	blank = np.zeros(img.shape[:2], dtype='uint8')
+	#lighter the region is more the color intensity is present in th region if it is darker then it is less
+	b,g,r = cv2.split(img)
+	blue = cv2.merge([b, blank, blank])
+	red = cv2.merge([blank, blank, r])
+	green = cv2.merge([blank, g, blank])
+	cv2.imshow('Red', red)
+	cv2.imshow('Green', green)
+	cv2.imshow('Blue', blue)
+	cv2.waitKey(0)
+	cv2.destroyAllWindows()	
+
 def merge_bgr(im):
+	
      img = cv2.imread(im)
      cv2.imshow('normal photo', img)
      B,G,R = cv2.split(img)
