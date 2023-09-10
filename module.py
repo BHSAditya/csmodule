@@ -194,10 +194,10 @@ def gaussianBlur(img):
 	cv2.waitKey(0)
 	cv2.destroyAllWindows()
 
-def alpha_blurring():
-    import cv2
-    img1 = cv2.imread('RESOURCES/Photos/cat.jpg')
-    img2 = cv2.imread('RESOURCES/Photos/park.jpg')
+def alpha_blurring(im1,im2):
+
+    img1 = cv2.imread(im1)
+    img2 = cv2.imread(im2)
     img2 = cv2.resize(img2, img1.shape[1::-1])
     cv2.imshow("img 1",img1)
     cv2.waitKey(0)
