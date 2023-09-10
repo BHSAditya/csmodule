@@ -84,9 +84,11 @@ def cropped(img):
 
 
 #shifting the image accros x and y axis
-def transformation(im):
+#M is translation Matrix used for transformation
+def translation(im):
      img = cv2.imread(im, 0)
      rows, cols = img.shape
+     #X=100 and y = 50 in this case
      M = np.float32([[1, 0, 100], [0, 1,50]])
      sheared_img  = cv2.warpAffine(img, M, (cols,rows))
      cv2.imshow('img', sheared_img)
@@ -99,8 +101,8 @@ def flip_vertical(img):
      im = cv2.imread(img, 0)
      rows, cols = im.shape
      M = np.float32([[1, 0, 0], [0, -1, rows],[0, 0, 1]])
-     sheared_img = cv2.warpPerspective(im, M, (cols,rows))
-     cv2.imshow('Flipped Vertically', sheared_img)
+     img = cv2.warpPerspective(im, M, (cols,rows))
+     cv2.imshow('Flipped Vertically', img)
      cv2.waitKey(0)
      cv2.destroyAllWindows()
 #flips the image horizontally
@@ -109,9 +111,8 @@ def flip_horizontal(img):
 	rows,cols = im.shape
 	M=np.float32([[-1, 0, cols], [0, 1, 0], [0, 0, 1]])
 	
-
-	sheared_img = cv2.warpPerspective(im, M, (cols,rows))
-	cv2.imshow('Flipped Horizontally', sheared_img)
+	img = cv2.warpPerspective(im, M, (cols,rows))
+	cv2.imshow('Flipped Horizontally', img)
 	cv2.waitKey(0)
 	cv2.destroyAllWindows()
 #rotates an image
@@ -119,6 +120,7 @@ def rotation(img):
 	im = cv2.imread(img,0)
 	rows, cols = im.shape
 	M = np.float32([[1, 0, 0], [0, -1, rows], [0, 0, 1]])
+	#getRotationMatrix2D had 3 parameters the rotation point, the angle and the scale in this scale the image rotates around the centre at an angle of 30 degrees and reduces it's size by 60%
 	img_rotation = cv2.warpAffine(im, cv2.getRotationMatrix2D((cols/2, rows/2),30,0.6), (cols, rows))
 	cv2.imshow('Rotated Img', img_rotation)
 	cv2.imwrite('rotation_out.jpg', img_rotation)
@@ -194,9 +196,11 @@ def gaussianBlur(img):
 
 
 def contour_detection(im):
+	
      img = cv2.imread(im)
      gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
      edged = cv2.Canny(gray, 30,300)
+     #RETR_EXTERNAL returns all the contours on the boundary of the image, CHAIN_APPROX_NONE means that all the contours will be displayed 
      contours, hierarchy = cv2.findContours(edged, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
      cv2.imshow('canny edges after contouring', edged)
      print('number of contours ='+ str(len(contours)))
