@@ -193,7 +193,7 @@ def gaussianBlur(img):
 	cv2.imshow('Gaussian Blur', blur)
 	cv2.waitKey(0)
 	cv2.destroyAllWindows()
-
+#Alpha blending is the process of overlaying a foreground image on a background image.
 def alpha_blurring(im1,im2):
 
     img1 = cv2.imread(im1)
